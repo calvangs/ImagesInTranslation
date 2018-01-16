@@ -190,6 +190,8 @@ if __name__ == '__main__':
     # imgnum = 0
     # x, y = (sp, sp)
     # # print("Starting pasting.")
+
+    '''
     l_c = 0
     r_c = 0
     for i in range(400):
@@ -210,7 +212,71 @@ if __name__ == '__main__':
             print("This image is a RIGHT image.")
             test.save("half/right/out"+str(r_c)+".png")
             r_c += 1
-    # quilt.show()
+
+    '''
+    w = 216
+    quilt = PILImage.new("LA", (6500, 2*864))
+    x, y = (0, 0)
+    for i in range(0, 198, 2):
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+        # quilt.paste(im, (x, y), im)
+
+        imgld1=PILImage.open("right/out"+str(i)+".png")
+        imgld1 = imgld1.rotate(90)
+        quilt.paste(imgld1, (x, y), imgld1)
+        x += w
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+
+        imgrd1=PILImage.open("left/out"+str(i)+".png")
+        quilt.paste(imgrd1, (x, y), imgrd1)
+        y+=w 
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+        imgld2=PILImage.open("right/out"+str(i+1)+".png")
+        imgld2 = imgld2.rotate(180)
+        quilt.paste(imgld2, (x, y), imgld2)
+        x-= w
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+        imgrd2=PILImage.open("left/out"+str(i +1)+".png")
+        imgrd2 = imgrd2.rotate(90)
+        quilt.paste(imgrd2, (x, y), imgrd2)
+        y += w
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+        imglb1=PILImage.open("right/out"+str(198 - i)+".png")
+        imglb1 = imglb1.rotate(180)
+        quilt.paste(imglb1, (x, y), imglb1)
+        x-= w
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+        imgrb1=PILImage.open("left/out"+str(198-i)+".png")
+        imgrb1 = imgrb1.rotate(90)
+        quilt.paste(imgrb1, (x, y), imgrb1)
+        y += w
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+        imglb2=PILImage.open("right/out"+str(198-i-1 )+".png")
+        imglb2 = imglb2.rotate(90)
+        quilt.paste(imglb2, (x, y), imglb2)
+        x+=w
+        print("Pasting image {} at ({}, {})". format(i, x, y))
+
+        imgrb2=PILImage.open("left/out"+str(198-i-1 )+".png")
+        quilt.paste(imgrb2, (x,y), imgrb2)
+
+        if i >= 96 and i < 100:
+            x = 0
+        elif i > 97: 
+            y = w*4
+            x += 2*216
+        else:
+            x += 2*216
+            y = 0
+
+    quilt.show()
+    quilt.save("final.png")
 
 
 
